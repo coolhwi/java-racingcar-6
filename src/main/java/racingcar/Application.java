@@ -34,10 +34,14 @@ public class Application {
         }
 
         Set<String> keySet = ht.keySet();
+        String[] winner;
 
         for(String key : keySet){
-            System.out.println(key+":"+ht.get(key));
+            System.out.println(key+" : "+ht.get(key));
         }
+        winner = whoIsWin(ht,answer);
+        String join = String.join(",",winner);
+        System.out.println("최종 우승자 : "+join);
 
     }
 
@@ -57,12 +61,27 @@ public class Application {
             }
         }
     }
-    private static void whoIsWin(HashMap<String,String> hs,String[] arr){
+    private static String[] whoIsWin(HashMap<String,String> hs,String[] arr){
         String[] s = new String[arr.length];
-
+        int num=0; // max 몇명인지
+        int k=0;
         for(int i=0 ; i<arr.length ; i++){
             s[i] = hs.get(arr[i]);
         }
+        int max = maxLength(s);
+        Set<String> keySet = hs.keySet();
+        for(String key : keySet){
+            if(hs.get(key).length() == max){
+                num++;
+            }
+        }
+        String[] win = new String[num];
+        for(String key : keySet){
+            if(hs.get(key).length() == max){
+                win[k++]=key;
+            }
+        }
+        return win;
 
     }
     private static int maxLength(String[] str){
